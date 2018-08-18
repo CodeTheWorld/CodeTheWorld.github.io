@@ -275,7 +275,13 @@
       <button type="button" class="button button--secondary button--pill tag-button js-article-tag js-tag-show-all" data-encode="">
         Show All<div class="tag-button__count">1</div>
       </button>
-    </li></ul>
+    </li><li><button type="button" class="button button--pill tag-button tag-button-1 js-article-tag" data-encode="MIT6.828">
+          <span>MIT6.828</span><div class="tag-button__count">1</div>
+        </button>
+      </li><li><button type="button" class="button button--pill tag-button tag-button-1 js-article-tag" data-encode="xv6">
+          <span>xv6</span><div class="tag-button__count">1</div>
+        </button>
+      </li></ul>
 </div>
 <div class="js-result layout--archive__result"></div>
 </div>
@@ -341,7 +347,7 @@
     };
   })();
 
-  var data = initData('{"2018":[{"key":"1","title":"%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BAxv6%E7%8E%AF%E5%A2%83","tags":[],"url":"%2F2018%2F08%2F18%2Fbuild-xv6-with-docker.html","date":"08月18日"}]}');
+  var data = initData('{"2018":[{"key":"1","title":"%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BAxv6%E7%8E%AF%E5%A2%83","tags":["xv6","MIT6.828"],"url":"%2F2018%2F08%2F18%2Fbuild-xv6-with-docker.html","date":"08月18日"}]}');
 
   var searchByTag = memorize(function(tag) {
     var i, j, cur, _tags, _tag, _data = {};
