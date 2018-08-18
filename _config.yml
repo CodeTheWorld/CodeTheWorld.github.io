@@ -119,7 +119,7 @@ comments:
     repository  : CodeTheWorld.github.io # GitHub repo
     owner       : CodeTheWorld # GitHub repo owner
     admin: # GitHub repo owner and collaborators, only these guys can initialize GitHub issues, IT IS A LIST.
-      CodeTheWorld # - your GitHub Id
+      - CodeTheWorld # - your GitHub Id
 
 
 ## => Pageview
