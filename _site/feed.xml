@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-Hans"><generator uri="https://jekyllrb.com/" version="3.8.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="zh-Hans" /><updated>2018-08-18T14:24:40+08:00</updated><id>http://localhost:4000/</id><title type="html">CodeTheWorld</title><subtitle>show you the code
+</subtitle><author><name>diligent_sloth</name><email>sxkds1991@gamil.com</email></author><entry><title type="html">使用docker搭建xv6环境</title><link href="http://localhost:4000/2018/08/18/build-xv6-with-docker.html" rel="alternate" type="text/html" title="使用docker搭建xv6环境" /><published>2018-08-18T00:00:00+08:00</published><updated>2018-08-18T00:00:00+08:00</updated><id>http://localhost:4000/2018/08/18/build-xv6-with-docker</id><content type="html" xml:base="http://localhost:4000/2018/08/18/build-xv6-with-docker.html">&lt;p&gt;这周为了能把xv6跑起来，尝试了各种方法，均以失败告终！&lt;/p&gt;
+
+&lt;p&gt;就在要放弃的时候，天佑的一句”docker”，点醒了我！&lt;/p&gt;
+
+&lt;p&gt;传奇就此展开！
+&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;背景&quot;&gt;背景&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;xv6依赖qemu运行&lt;/li&gt;
+  &lt;li&gt;centOS安装qemu各种问题&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;怎么办&quot;&gt;怎么办？&lt;/h2&gt;
+
+&lt;p&gt;docker!!!&lt;/p&gt;
+
+&lt;h3 id=&quot;具体操作&quot;&gt;具体操作&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;安装docker（自行查阅docker官方文档 &lt;a href=&quot;https://yeasy.gitbooks.io/docker_practice/introduction/what.html&quot;&gt;推荐手册&lt;/a&gt;）&lt;/li&gt;
+  &lt;li&gt;查找合适的搭载xv6的ubuntu镜像 &lt;a href=&quot;https://hub.docker.com/r/shqwang/xv6/&quot;&gt;推荐xv6镜像&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;运行docker&quot;&gt;运行docker&lt;/h4&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 下载镜像&lt;/span&gt;
+docker pull shqwang/xv6
+&lt;span class=&quot;c&quot;&gt;# 启动容器&lt;/span&gt;
+docker run &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; shqwang/xv6
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这时，我们就进入ubuntu系统了。
+xv6的源码目录！！！&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@f062c229465d:/# &lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /etc/issue
+Ubuntu 16.04 LTS &lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\l&lt;/span&gt;
+
+root@f062c229465d:/# &lt;span class=&quot;nb&quot;&gt;ls
+&lt;/span&gt;bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var  xv6-public
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;编译xv6&quot;&gt;编译xv6&lt;/h4&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 切换当前目录&lt;/span&gt;
+root@9b374b994230:/# &lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;xv6-public/
+
+&lt;span class=&quot;c&quot;&gt;# 编译，生成xv6.img镜像&lt;/span&gt;
+make
+&lt;span class=&quot;nt&quot;&gt;-----------------------------&lt;/span&gt;
+root@9b374b994230:/xv6-public# &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;xv6
+xv6.img
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;qemu启动与退出&quot;&gt;qemu启动与退出&lt;/h4&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 使用qemu启动xv6&lt;/span&gt;
+qemu-system-i386 &lt;span class=&quot;nt&quot;&gt;-serial&lt;/span&gt; mon:stdio &lt;span class=&quot;nt&quot;&gt;-hdb&lt;/span&gt; fs.img xv6.img &lt;span class=&quot;nt&quot;&gt;-smp&lt;/span&gt; 1 &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; 512 —nographic
+
+&lt;span class=&quot;c&quot;&gt;# 退出qemu&lt;/span&gt;
+Ctrl+A x
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;参考文档&quot;&gt;参考文档&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://hub.docker.com/r/shqwang/xv6/&quot;&gt;https://hub.docker.com/r/shqwang/xv6/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/jcli/p/4232531.html&quot;&gt;https://www.cnblogs.com/jcli/p/4232531.html&lt;/a&gt;&lt;/p&gt;</content><author><name>diligent_sloth</name><email>sxkds1991@gamil.com</email></author><summary type="html">这周为了能把xv6跑起来，尝试了各种方法，均以失败告终！ 就在要放弃的时候，天佑的一句”docker”，点醒了我！ 传奇就此展开！</summary></entry></feed>
