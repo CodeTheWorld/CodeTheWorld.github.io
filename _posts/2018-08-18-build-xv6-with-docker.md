@@ -22,6 +22,8 @@ docker!!!
 
 ### 具体操作
 
+#### 准备工作
+
 1. 安装docker（自行查阅docker官方文档 [推荐手册](https://yeasy.gitbooks.io/docker_practice/introduction/what.html)）
 2. 查找合适的搭载xv6的ubuntu镜像 [推荐xv6镜像](https://hub.docker.com/r/shqwang/xv6/)
 
