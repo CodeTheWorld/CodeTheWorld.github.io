@@ -2,6 +2,7 @@
 layout: article
 title: 使用docker搭建xv6环境
 tags: xv6 MIT6.828
+key: build-xv6-with-docker
 mathajx: false
 ---
 这周为了能把xv6跑起来，尝试了各种方法，均以失败告终！
