@@ -34,10 +34,10 @@ timezone: Asia/Shanghai # see https://en.wikipedia.org/wiki/List_of_tz_database_
 ## => Author and Social
 ##############################
 author: 
-  type      : # "person" (default), "organization"
+  type      : person # "person" (default), "organization"
   name      : diligent_sloth
-  url       :
-  avatar    : # path or url of avatar image
+  url       : https://codetheworld.github.io/
+  avatar    : https://wx3.sinaimg.cn/large/73bd9e13ly1fjkqy66hl8j208c08c0td.jpg # path or url of avatar image
   bio       : hello, world!
   email     : sxkds1991@gamil.com
   facebook  : # "user_name" the last part of your profile url, e.g. https://www.facebook.com/user_name
@@ -105,7 +105,7 @@ sources: # bootcdn (default), unpkg
 ## => Comments
 ##############################
 comments:
-  provider: false # false (default), "disqus", "gitalk", "custom"
+  provider: gitalk # false (default), "disqus", "gitalk", "custom"
 
   ## Disqus
   disqus:
@@ -114,12 +114,12 @@ comments:
   ## Gitalk
   # please refer to https://github.com/gitalk/gitalk for more info.
   gitalk:
-    clientID    : # GitHub Application Client ID
-    clientSecret: # GitHub Application Client Secret
-    repository  : # GitHub repo
-    owner       : # GitHub repo owner
+    clientID    : a5c23c338e5fed1fded3 # GitHub Application Client ID
+    clientSecret: a0029624768284a8790fd404c460462d9bedea68 # GitHub Application Client Secret
+    repository  : CodeTheWorld.github.io # GitHub repo
+    owner       : CodeTheWorld # GitHub repo owner
     admin: # GitHub repo owner and collaborators, only these guys can initialize GitHub issues, IT IS A LIST.
-      # - your GitHub Id
+      CodeTheWorld # - your GitHub Id
 
 
 ## => Pageview
