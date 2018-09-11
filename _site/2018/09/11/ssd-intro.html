@@ -1,10 +1,10 @@
 <!DOCTYPE html><html lang="zh-Hans">
   <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>使用docker搭建xv6环境 - CodeTheWorld</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>SSD构成与特性 - CodeTheWorld</title>
 
-<meta name="description" content="这周为了能把xv6跑起来，尝试了各种方法，均以失败告终！就在要放弃的时候，天佑的一句”docker”，点醒了我！传奇就此展开！">
-<link rel="canonical" href="http://localhost:4000/2018/08/18/build-xv6-with-docker.html"><link rel="alternate" type="application/rss+xml" title="CodeTheWorld" href="/feed.xml">
+<meta name="description" content="为了能够对SSD的运行速度有更深的认知，进行了这次的专题学习。但是最终发现并没有什么卵用。">
+<link rel="canonical" href="http://localhost:4000/2018/09/11/ssd-intro.html"><link rel="alternate" type="application/rss+xml" title="CodeTheWorld" href="/feed.xml">
 <!-- begin favicon -->
 <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
@@ -438,105 +438,266 @@ l-23 -6 32 -70 c37 -81 127 -184 183 -210 21 -10 44 -24 51 -32 18 -18 35 -16
 </header>
 </div><div class="page__content"><div class ="main"><div class="col-aside js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div></aside></div>
 
-          <div class="col-main"><article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1 itemprop="headline">使用docker搭建xv6环境</h1></header><span class="split-space">&nbsp;</span>
+          <div class="col-main"><article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1 itemprop="headline">SSD构成与特性</h1></header><span class="split-space">&nbsp;</span>
                       <a class="edit-on-github"
                         title="在 Github 上修改"
-                        href="https://github.com/CodeTheWorld/CodeTheWorld.github.io/tree/master/_posts/2018-08-18-build-xv6-with-docker.md">
+                        href="https://github.com/CodeTheWorld/CodeTheWorld.github.io/tree/master/_posts/2018-09-11-ssd-intro.md">
                         <i class="far fa-edit"></i></a></div><div class="article__info clearfix"><meta itemprop="author" content="diligent_sloth"/><ul class="left-col menu"><li>
           <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=xv6">xv6</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=MIT6.828">MIT6.828</a>
-        </li><meta itemprop="keywords" content="xv6,MIT6.828">
-    </ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <time datetime="2018-08-18T00:00:00+08:00"
-              itemprop="datePublished">2018年 08月18日
+            href="/archive.html?tag=SSD">SSD</a>
+        </li><meta itemprop="keywords" content="SSD">
+    </ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <time datetime="2018-09-11T00:00:00+08:00"
+              itemprop="datePublished">2018年 09月11日
             </time></li><li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
             <link itemprop="interactionType" href="http://schema.org/WatchAction"/>
-            <i class="far fa-eye"></i> <span class="js-pageview" data-page-key="build-xv6-with-docker">0</span> 阅读
+            <i class="far fa-eye"></i> <span class="js-pageview" data-page-key="ssd-intro">0</span> 阅读
           </li></ul></div>
 <div class="js-article-content"><div class="layout--article">
 
-  <div class="article__content" itemprop="articleBody"><p>这周为了能把xv6跑起来，尝试了各种方法，均以失败告终！</p>
-
-<p>就在要放弃的时候，天佑的一句”docker”，点醒了我！</p>
-
-<p>传奇就此展开！
+  <div class="article__content" itemprop="articleBody"><p>为了能够对SSD的运行速度有更深的认知，进行了这次的专题学习。<br />
+但是最终发现并没有什么卵用。
 <!--more--></p>
 
-<h2 id="背景">背景</h2>
+<p>固态硬盘或固态驱动器（英语：Solid-state drive或Solid-state disk，简称SSD）是一种主要以闪存作为永久性存储器的计算机存储设备。</p>
 
-<ul>
-  <li>xv6依赖qemu运行</li>
-  <li>centOS安装qemu各种问题</li>
-</ul>
+<p>下图是一个SSD的内部构造，主要包括Flash Memory、控制器、DRAM等。
+<img src="https://ws2.sinaimg.cn/large/006tKfTcly1fsprjh46vmj30ku0g0jup.jpg" alt="" /></p>
 
-<h2 id="怎么办">怎么办？</h2>
+<h2 id="闪存是什么">闪存是什么？</h2>
 
-<p>docker!!!</p>
+<p>快闪存储器（英语：flash memory），是一种电子式可清除程序化只读存储器的形式，允许在操作中被多次擦或写的存储器。</p>
 
-<h3 id="具体操作">具体操作</h3>
+<p>Intel很早就发明了EPROM，这是一种可以用紫外线擦除的存储器。相较于ROM，它的内容可以更新而且可以保持10～20年，老式电脑的BIOS都存储于此。</p>
 
-<h4 id="准备工作">准备工作</h4>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fsovhq62irj306y03mq2w.jpg" alt="" />
+（Intel 1702）</p>
 
-<ol>
-  <li>安装docker（自行查阅docker官方文档 <a href="https://yeasy.gitbooks.io/docker_practice/introduction/what.html">推荐手册</a>）</li>
-  <li>查找合适的搭载xv6的ubuntu镜像 <a href="https://hub.docker.com/r/shqwang/xv6/">推荐xv6镜像</a></li>
-</ol>
+<p>它的顶部必须被覆盖住，以防被阳光里的紫外线擦除。后来Intel在其基础上于1978年发明了电可擦除的升级版叫做EEPROM。不需要阳光的帮忙，方便多了，可是读取和擦除速度却非常缓慢。</p>
 
-<h4 id="运行docker">运行docker</h4>
+<p>这时我们的主人公富士雄出场了！！！</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 下载镜像</span>
-docker pull shqwang/xv6
-<span class="c"># 启动容器</span>
-docker run <span class="nt">-t</span> <span class="nt">-i</span> shqwang/xv6
-</code></pre></div></div>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fsovgnig8bj30go0m875a.jpg" alt="" />
+富士雄本雄</p>
 
-<p>这时，我们就进入ubuntu系统了。
-xv6的源码目录！！！</p>
+<p>他于1971年加入了东芝公司。受到了EEPROM的启发，他开始利用自己夜晚和周末的时间钻研一种能快速擦除的EERPOM。<strong>他在1980年取得突破，申请了一个叫做simultaneously erasable EEPROM的专利，即Flash</strong>。然而，日本大公司的论资排辈却让这项划时代的发明石沉大海。直到4年之后，当他拿着他的样品参加当年的IEEE大会的时候，NOR Flash引起了轰动，以至于当他回到日本后，他的老板总是被Intel打来的要样品电话骚扰。他被奖励了几个人手帮忙，而这些人却是part-time的。而在大洋的另一边，Intel在收到样品后，立刻成立闪存事业部，召集300多个工程师全力研发自己的版本。</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@f062c229465d:/# <span class="nb">cat</span> /etc/issue
-Ubuntu 16.04 LTS <span class="se">\n</span> <span class="se">\l</span>
+<p>东芝公司并没有把NOR Flash技术当作宝贝，只是不想要别人插手而已。而富士雄却并没有停止他的追求，<strong>在1986年发明了NAND Flash，并于1990年制作出了样品</strong>，大大降低了制造成本。由于他的贡献，东芝奖励了他一笔几百美金的奖金和一个位置很高却悠闲的职位。做为一个工程师，他忍受不了这种待遇，不得不辞职进入大学继续科研。</p>
 
-root@f062c229465d:/# <span class="nb">ls
-</span>bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var  xv6-public
-</code></pre></div></div>
+<p>东芝公司的短视很快招来了市场的惩罚。Flash市场迅速扩张，在90年代末期就达到数百亿美金的市场规模，Intel是这个市场的霸主，而东芝公司只享有很小的份额（NAND，NOR几乎没有）。在很长一段时间，东芝公司甚至不承认NOR Flash是他发明的，说是Intel发明的。直到IEEE在1997年颁给富士雄特殊贡献奖后才改口。</p>
 
-<h4 id="编译xv6">编译xv6</h4>
+<p>富士雄觉得自己的贡献被东芝公司抹杀了，他愤然于2006年起诉了公司，并索要10亿日元的补偿。最后他和东芝公司达成和解，得到8700万日元（合758,000美元）。</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 切换当前目录</span>
-root@9b374b994230:/# <span class="nb">cd </span>xv6-public/
+<p>富士雄在东芝的23年（1971年~1993年）里，申请了大约500件专利。</p>
 
-<span class="c"># 编译，生成xv6.img镜像</span>
-make
-<span class="nt">-----------------------------</span>
-root@9b374b994230:/xv6-public# <span class="nb">ls</span> | <span class="nb">grep </span>xv6
-xv6.img
-</code></pre></div></div>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fsowontucwj30fa0axaaw.jpg" alt="DRAM和Flash的市场规模" />
+DRAM和Flash的市场规模</p>
 
-<h4 id="qemu启动与退出">qemu启动与退出</h4>
+<h3 id="闪存的构成">闪存的构成</h3>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 使用qemu启动xv6</span>
-qemu-system-i386 <span class="nt">-serial</span> mon:stdio <span class="nt">-hdb</span> fs.img xv6.img <span class="nt">-smp</span> 1 <span class="nt">-m</span> 512 —nographic
+<p>闪存有NOR Flash(或非)和NAND Flash(与非)两种。NOR Flash支持随机访问，抹写时间较长，适用于PC的BIOS、机顶盒等。</p>
 
-<span class="c"># 退出qemu</span>
-Ctrl+A x
-</code></pre></div></div>
+<p>NAND FLASH基本存储单元 (Cell) 是一种类NMOS的双层浮空栅 (Floating Gate) 结构, 如下图所示。</p>
 
-<h2 id="参考文档">参考文档</h2>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fspqg0s5w2j30dt08574l.jpg" alt="" /></p>
 
-<p><a href="https://hub.docker.com/r/shqwang/xv6/">https://hub.docker.com/r/shqwang/xv6/</a></p>
+<p>它包括源极（Source）、漏极（Drain）、控制栅（Control Gate）、浮动栅（Floating Gate）、硅基（Silicon Substrate）、硅氧化物绝缘层(Insulator)组成。</p>
 
-<p><a href="https://www.cnblogs.com/jcli/p/4232531.html">https://www.cnblogs.com/jcli/p/4232531.html</a></p>
+<h3 id="三种基本操作">三种基本操作</h3>
+
+<h4 id="program">program</h4>
+
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1fspqglnyzsj30dl08l74r.jpg" alt="" /></p>
+
+<p>在控制栅加正电压，由于”隧道效应”，电子会被从硅基吸入到浮动栅。去掉电压后，由于浮动栅被绝缘层包裹，电子被困在浮动栅内。这就是闪存能作为永久存储器的基础。</p>
+
+<blockquote>
+  <p><strong>隧道效应</strong></p>
+
+  <p>经典物理学认为
+物体越过势垒，有一阈值能量；粒子能量小于此能量则不能越过，大于此能量则可以越过。例如骑自行车过小坡，先用力骑，如果坡很低，不蹬自行车也能靠惯性过去。如果坡很高，不蹬自行车，车到一半就停住，然后退回去。</p>
+
+  <p>量子力学则认为
+即使粒子能量小于阈值能量，很多粒子冲向势垒，一部分粒子反弹，还会有一些粒子能过去，好象有一个隧道，称作“量子隧道（quantum tunneling）”。可见，宏观上的确定性在微观上往往就具有不确定性。虽然在通常的情况下，隧道效应并不影响经典的宏观效应，因为隧穿几率极小，但在某些特定的条件下宏观的隧道效应也会出现。</p>
+</blockquote>
+
+<h4 id="erase">erase</h4>
+
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1fspqguju6zj30dl088aah.jpg" alt="" /></p>
+
+<p>在硅基加正电压，能够把电子从浮动栅中吸出来。</p>
+
+<h4 id="read">read</h4>
+
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fspqg0s5w2j30dt08574l.jpg" alt="" /></p>
+
+<p>对于浮栅中有电荷的单元来说，由于浮栅的感应作用，在源极和漏极之间将形成带正电的空间电荷区，这时无论控制极上有没有施加偏置电压，晶体管都将处于导通状态。而对于浮栅中没有电荷的晶体管来说只有当控制极上施加有适当的偏置电压，在硅基层上感应出电荷，源极和漏极才能导通，也就是说在没有给控制极施加偏置电压时，晶体管是截止的。</p>
+
+<p>如果晶体管的源极接地而漏极接位线，在无偏置电压的情况下，检测晶体管的导通状态就可以获得存储单元中的数据，如果位线上为低电平，说明晶体管处于导通状态，读取的数据为0，如果位线上为高电平，则说明晶体管处于截止状态，读取的数据为1。由于控制栅极在读取数据的过程中施加的电压较小或根本不施加电压，不足以改变浮置栅极中原有的电荷量，所以读取操作不会改变FLASH中原有的数据。</p>
+
+<h3 id="闪存分类">闪存分类</h3>
+
+<p>闪存根据单个存储单元所能存储的信息量分为三种：SLC(Single Level Cell)、MLC(Multi Level Cell)、TLC(Triple Level Cell)。
+SLC，存储1bit数据；MLC，存储2bit数据；MLC，存储3bit数据。</p>
+
+<p>如何实现的呢？</p>
+
+<p>浮动栅中电子数量不同，硅基便会有不同的连通性，这时读取数据时源极的电平便会有差异。</p>
+
+<p>下图图一是SLC的电平分布示例，图二是SLC的电平分布，MLC依次类推。</p>
+
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fspqt9owlkj30rv0br0tx.jpg" alt="图一" /></p>
+
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1fspqthuoraj30mx0bv75m.jpg" alt="" /></p>
+
+<p>由于每个存储单元存储的信息更多，MLC/TLC的结构会相对复杂，导致其性能和可靠性会大幅落后于结构简单的SLC内存</p>
+
+<h2 id="ssd的结构">SSD的结构</h2>
+
+<p>一个典型的Flash芯片由Package，Die，Plane，Block，Page组成</p>
+
+<p>Package，即flash芯片</p>
+
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fspryekpeyj30cl08cjrd.jpg" alt="" /></p>
+
+<p>Die，一个Package颗粒是由一颗或多颗Die封装在一起而成的。</p>
+
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fsprzqufg4j30go085wei.jpg" alt="" /></p>
+
+<p>Die是接收和执行FLASH命令的基本单元。
+Plane，一个Die由多个Plane组成。Plane中含有自己独占的Page Register。</p>
+
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1fspv2fscnlj30l70h7q94.jpg" alt="" /></p>
+
+<p>Block是擦除的基本单位。
+Page是编程的基本单位。
+为什么？</p>
+
+<p>如下图所示，存储单元的接线方式：字线横向串联控制栅；位线纵向串联；一个block上的所有存储单元共用一个硅基。
+对于SLC，一条字线上的所有存储单元构成了一个page，对于MLC来说，对应了两个两个page。
+<img src="https://ws2.sinaimg.cn/large/006tKfTcly1fsprs1xun5j30fc0eon0k.jpg" alt="" /></p>
+
+<p><strong>写入操作</strong></p>
+
+<p>在对应的字线上加20V电压，在不需要program的cell所对应的位线上加10V电压，使的电势差较小，不足以使电子穿越绝缘层，从而达到不被program的目的。</p>
+
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1fspt8e726wj30kq0cw77w.jpg" alt="" /></p>
+
+<p>但是，这样造成了”写干扰“。即部分相邻cell会被program。</p>
+
+<p><strong>读取操作</strong></p>
+
+<p>读取对应的page时，为了保证page的位线是导通的，需要在该block的所有其他字线上加一个5V的电压</p>
+
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1fspt8rpp7yj30kq0afmzw.jpg" alt="" /></p>
+
+<p>这样会造成”读干扰“。即其它page会被轻微program。</p>
+
+<p>所以，为了简化设计，将编程的基本单位设为page，即以字线为单位。由于一个block基于一个硅基，所以block就作为擦除的基本单位。</p>
+
+<blockquote>
+  <p><strong>存在的问题</strong></p>
+
+  <p><strong>擦写次数受限</strong>：由于擦写时，电子会穿过浮动栅与硅基之间的绝缘层，会造成绝缘层的老化。浮动栅就不能很好的锁住电子，电子会流失。NAND SLC型的可擦写次数在10W ~ 100W之间。MLC的可擦写次数在3000~1W之间。而TLC只有1000次左右。可能会有坏块产生。</p>
+
+  <p><strong>电荷泄露</strong>：浮动栅中的电子随着时间的推移，会发生泄露现象。一般为10年左右。</p>
+
+  <p><strong>读写干扰</strong>：读取、写入时，会对相邻的cell造成轻微program</p>
+
+  <p><strong>必须先擦再写</strong>：同磁盘不同，只有擦除过的cell，才能够被program</p>
+</blockquote>
+
+<p>怎么解决这些问题呢？接下来，控制器闪亮登场！！！</p>
+
+<h2 id="控制器">控制器</h2>
+
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fspvfkk0t0j309r0f2js9.jpg" alt="" /></p>
+
+<p>由图可见，控制器主要由三部分组成：主机接口、FTL(Flash Translation Layer)闪存转换层、NAND接口。其中FTL是最核心的部件。</p>
+
+<h3 id="数据写入">数据写入</h3>
+
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fstci6mgauj309v08d3zz.jpg" alt="" /></p>
+
+<p>SSD通过多个Flash可并行操作多个闪存颗粒，类似RAID0，大大提高了底层带宽。</p>
+
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fstcniodtpj30c508v458.jpg" alt="" /></p>
+
+<h3 id="ftl">FTL</h3>
+
+<p>FTL存在于操作系统的文件系统和闪存之间，对闪存进行封装，使操作系统可以按照传统扇区的方式操作闪存。闪存的读写单位为页(page)，大小一般为4KB或8KB。而目前的主流操作系统的文件系统均针对HDD设计，所以是按照512B为读写单位。而且闪存写之前需要先擦除整个block。<br />
+操作系统无法管理SSD!!!<br />
+于是根据架构设计中经典的设计原则：任何问题都可以通过引入一个中间层来解决！！！</p>
+
+<p>FTL应运而生。</p>
+
+<p>FTL本质是维护了一个逻辑Block地址（LBA，logical block addresses ）和物理Block地址（PBA, physical block addresses）的对应关系。</p>
+
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fst6ntsqd1j308c04y749.jpg" alt="" /></p>
+
+<p><strong>write</strong></p>
+
+<p>当文件系统要写入一个特定的逻辑块时，FTL实际操作是将数据写入一个空闲的物理块中，并更新映射表。然后将旧的物理块标为无效，供垃圾回收回收该block。</p>
+
+<p><strong>read</strong></p>
+
+<p>当文件系统要读取一个特定的逻辑块时，FTL需要先读取映射表，根据映射表，再取读取实际的数据地址。一般情况下，映射表也是存储在闪存上的，这样每个读取需要访问两遍闪存。所以，有的SSD引入了DRAM。在SSD启动后，会将映射表加载到DRAM中。</p>
+
+<h4 id="错误校验error-correction">错误校验(Error correction)</h4>
+
+<h4 id="磨损平衡wear-leveling">磨损平衡(Wear leveling)</h4>
+
+<p>磨损平衡是确保闪存的每个block的擦写次数相等的一种机制。</p>
+
+<p>通常情况下，数据的更新频率是不一致的。总会有些文件被频繁更新，有些文件不常更新。<br />
+动态磨损平衡：每次写入都挑最年轻的块来使用，老的块尽量不用<br />
+静态磨损平衡：把一些长期没有修改的老数据从一个年轻的block中挪到最老的block中，从而达到全盘磨损平衡。</p>
+
+<h4 id="垃圾回收">垃圾回收</h4>
+
+<p>由于前面所说SSD写入数据时总是写入空白页，同时将之前旧的block标为无效。这样就需要垃圾回收机制去回收这些无效block。</p>
+
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fstd93ehftj308y08wmzb.jpg" alt="" /></p>
+
+<p>因为垃圾回收机制需要使用空白页，故SSD会有一些预留空间，只可供SSD自身使用，无法供用户使用。该空间一般占SSD空间的7.37%。</p>
+
+<h4 id="坏块管理">坏块管理</h4>
+
+<h2 id="性能">性能</h2>
+
+<p>IOPS和吞吐量是衡量磁盘性能的两个重要指标。<br />
+IOPS(Input/Output Per Second)指磁盘单位时间内能处理的IO次数。对OLTP应用比较关注。<br />
+吞吐量(Throughput)指磁盘单位时间内传输的数据量大小。对OLAP应用比较关注。</p>
+
+<h3 id="机械硬盘的性能">机械硬盘的性能</h3>
+
+<p>I/O耗时 = 寻址时间+旋转时间+传送时间<br />
+寻址时间：磁头移动到指定磁道的时间 平均5ms左右
+旋转时间：7200转 4ms
+数据传送时间：读取的数据大小/传输速率(100MB/s+)   «1ms</p>
+
+<p>所以，小文件(4KB)随机IO耗时在10ms之间，故IOPS在100左右，大文件顺序IO的寻址和旋转时间基本可以忽略不计，所以吞吐量在100MB左右。</p>
+
+<h3 id="ssd的性能">SSD的性能</h3>
+
+<p>由前面可知，对SSD来讲，顺序IO与随机IO差别不大，SSD的4KB IOPS大概在5000-100000的范围内，吞吐量在500MB以上</p>
+
+<h2 id="参考文献">参考文献</h2>
+
+<p><a href="https://zhuanlan.zhihu.com/p/26745577">杂谈闪存二：NOR和NAND Flash</a><br />
+<a href="http://new.qq.com/omn/20180206/20180206G0RLY8.html">东芝发明闪存在日本被遗忘——NHK纪录片讲述舛冈富士雄的功绩</a><br />
+<a href="http://blog.163.com/ssd_guy/blog/static/2114142782012817515812/">浅析SSD系列（8）：Flash Memory工作原理</a><br />
+<a href="http://www.jinbuguo.com/storage/ssd_intro.html">SSD(固态硬盘)简介</a><br />
+<a href="http://www.ssdfans.com/%E9%97%AA%E5%AD%98%E5%9F%BA%E7%A1%80/">闪存基础</a><br />
+<a href="http://blog.51cto.com/wushank/1708168#comment">磁盘性能指标–IOPS、吞吐量及测试</a></p>
 </div>
 
-  <footer class="article__footer"><meta itemprop="dateModified" content="2018-08-18T00:00:00+08:00"><!-- this will show at every article content's bottom --><div class="article__license"><div class="license">
+  <footer class="article__footer"><meta itemprop="dateModified" content="2018-09-11T00:00:00+08:00"><!-- this will show at every article content's bottom --><div class="article__license"><div class="license">
     <p>本文遵守 <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> 许可协议。
       <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
         <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
       </a>
     </p>
-  </div></div></footer><div class="article__section-navigator clearfix"><div class="previous"><span>上篇</span><a href="/2018/09/11/ssd-intro.html">SSD构成与特性</a></div></div></div>
+  </div></div></footer><div class="article__section-navigator clearfix"><div class="next"><span>下篇</span><a href="/2018/08/18/build-xv6-with-docker.html">使用docker搭建xv6环境</a></div></div></div>
 
 <script>(function() {
   var SOURCES = window.TEXT_VARIABLES.sources;
