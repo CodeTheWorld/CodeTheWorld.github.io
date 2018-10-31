@@ -451,7 +451,7 @@ l-23 -6 32 -70 c37 -81 127 -184 183 -210 21 -10 44 -24 51 -32 18 -18 35 -16
   <ul class="menu">
     <li>
       <button type="button" class="button button--secondary button--pill tag-button js-article-tag js-tag-show-all" data-encode="">
-        Show All<div class="tag-button__count">3</div>
+        Show All<div class="tag-button__count">4</div>
       </button>
     </li><li><button type="button" class="button button--pill tag-button tag-button-1 js-article-tag" data-encode="MIT6.828">
           <span>MIT6.828</span><div class="tag-button__count">1</div>
@@ -459,14 +459,20 @@ l-23 -6 32 -70 c37 -81 127 -184 183 -210 21 -10 44 -24 51 -32 18 -18 35 -16
       </li><li><button type="button" class="button button--pill tag-button tag-button-1 js-article-tag" data-encode="SSD">
           <span>SSD</span><div class="tag-button__count">1</div>
         </button>
+      </li><li><button type="button" class="button button--pill tag-button tag-button-1 js-article-tag" data-encode="array">
+          <span>array</span><div class="tag-button__count">1</div>
+        </button>
       </li><li><button type="button" class="button button--pill tag-button tag-button-1 js-article-tag" data-encode="hashmap">
           <span>hashmap</span><div class="tag-button__count">1</div>
         </button>
-      </li><li><button type="button" class="button button--pill tag-button tag-button-1 js-article-tag" data-encode="leetcode">
-          <span>leetcode</span><div class="tag-button__count">1</div>
+      </li><li><button type="button" class="button button--pill tag-button tag-button-2 js-article-tag" data-encode="leetcode">
+          <span>leetcode</span><div class="tag-button__count">2</div>
         </button>
       </li><li><button type="button" class="button button--pill tag-button tag-button-1 js-article-tag" data-encode="xv6">
           <span>xv6</span><div class="tag-button__count">1</div>
+        </button>
+      </li><li><button type="button" class="button button--pill tag-button tag-button-1 js-article-tag" data-encode="%E5%8F%8C%E6%8C%87%E9%92%88">
+          <span>双指针</span><div class="tag-button__count">1</div>
         </button>
       </li></ul>
 </div>
@@ -534,7 +540,7 @@ l-23 -6 32 -70 c37 -81 127 -184 183 -210 21 -10 44 -24 51 -32 18 -18 35 -16
     };
   })();
 
-  var data = initData('{"2018":[{"key":"1","title":"%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C-leetcode","tags":["leetcode","hashmap"],"url":"%2F2018%2F10%2F30%2Fleetcode-01-two-sum.html","date":"10月30日"},{"key":"2","title":"SSD%E6%9E%84%E6%88%90%E4%B8%8E%E7%89%B9%E6%80%A7","tags":["SSD"],"url":"%2F2018%2F09%2F11%2Fssd-intro.html","date":"09月11日"},{"key":"3","title":"%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BAxv6%E7%8E%AF%E5%A2%83","tags":["xv6","MIT6.828"],"url":"%2F2018%2F08%2F18%2Fbuild-xv6-with-docker.html","date":"08月18日"}]}');
+  var data = initData('{"2018":[{"key":"1","title":"%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C-leetcode","tags":["leetcode","array","%E5%8F%8C%E6%8C%87%E9%92%88"],"url":"%2F2018%2F10%2F31%2Fleetcode-15-3Sum.html","date":"10月31日"},{"key":"2","title":"%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C-leetcode","tags":["leetcode","hashmap"],"url":"%2F2018%2F10%2F30%2Fleetcode-01-two-sum.html","date":"10月30日"},{"key":"3","title":"SSD%E6%9E%84%E6%88%90%E4%B8%8E%E7%89%B9%E6%80%A7","tags":["SSD"],"url":"%2F2018%2F09%2F11%2Fssd-intro.html","date":"09月11日"},{"key":"4","title":"%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BAxv6%E7%8E%AF%E5%A2%83","tags":["xv6","MIT6.828"],"url":"%2F2018%2F08%2F18%2Fbuild-xv6-with-docker.html","date":"08月18日"}]}');
 
   var searchByTag = memorize(function(tag) {
     var i, j, cur, _tags, _tag, _data = {};
