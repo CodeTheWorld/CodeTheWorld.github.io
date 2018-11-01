@@ -1,10 +1,10 @@
 <!DOCTYPE html><html lang="zh-Hans">
   <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>三数之和-leetcode - CodeTheWorld</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>最接近的三数之和-leetcode - CodeTheWorld</title>
 
 <meta name="description" content="">
-<link rel="canonical" href="http://localhost:4000/2018/10/31/leetcode-15-3Sum.html"><link rel="alternate" type="application/rss+xml" title="CodeTheWorld" href="/feed.xml">
+<link rel="canonical" href="http://localhost:4000/2018/10/31/leetcode-16-3Sum-closest.html"><link rel="alternate" type="application/rss+xml" title="CodeTheWorld" href="/feed.xml">
 <!-- begin favicon -->
 <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
@@ -438,10 +438,10 @@ l-23 -6 32 -70 c37 -81 127 -184 183 -210 21 -10 44 -24 51 -32 18 -18 35 -16
 </header>
 </div><div class="page__content"><div class ="main"><div class="col-aside js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div></aside></div>
 
-          <div class="col-main"><article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1 itemprop="headline">三数之和-leetcode</h1></header><span class="split-space">&nbsp;</span>
+          <div class="col-main"><article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1 itemprop="headline">最接近的三数之和-leetcode</h1></header><span class="split-space">&nbsp;</span>
                       <a class="edit-on-github"
                         title="在 Github 上修改"
-                        href="https://github.com/CodeTheWorld/CodeTheWorld.github.io/tree/master/_posts/2018-10-31-leetcode-15-3Sum.md">
+                        href="https://github.com/CodeTheWorld/CodeTheWorld.github.io/tree/master/_posts/2018-10-31-leetcode-16-3Sum-closest.md">
                         <i class="far fa-edit"></i></a></div><div class="article__info clearfix"><meta itemprop="author" content="diligent_sloth"/><ul class="left-col menu"><li>
           <a class="button button--secondary button--pill button--sm"
             href="/archive.html?tag=leetcode">leetcode</a>
@@ -456,59 +456,46 @@ l-23 -6 32 -70 c37 -81 127 -184 183 -210 21 -10 44 -24 51 -32 18 -18 35 -16
               itemprop="datePublished">2018年 10月31日
             </time></li><li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
             <link itemprop="interactionType" href="http://schema.org/WatchAction"/>
-            <i class="far fa-eye"></i> <span class="js-pageview" data-page-key="leetcode-15-3Sum">0</span> 阅读
+            <i class="far fa-eye"></i> <span class="js-pageview" data-page-key="leetcode-16-3Sum-closest">0</span> 阅读
           </li></ul></div>
 <div class="js-article-content"><div class="layout--article">
 
   <div class="article__content" itemprop="articleBody"><!--more-->
 
-<p><a href="https://leetcode-cn.com/problems/3sum/description/">题目链接</a></p>
+<p><a href="https://leetcode-cn.com/problems/3sum-closest/description/">题目链接</a></p>
 
 <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">/**
-  思路：1.先将数组排序
-        2.fix一个值，然后用双指针法遍历右侧的子数组，寻找sum=0的情况
-        3.每遇到一个值都判断和前面的值是否相等，相等就跳过（避免重复）
+  思路
+    1.将数组排序
+    2.fix一个数
+    3.双指针左右夹逼，寻找最合适的值
   时间复杂度：O(n2)
   空间复杂度：O(1)
 */</span><span class="x">
-</span><span class="k">func</span><span class="x"> </span><span class="n">threeSum1</span><span class="p">(</span><span class="n">nums</span><span class="x"> </span><span class="p">[]</span><span class="kt">int</span><span class="p">)</span><span class="x"> </span><span class="p">[][]</span><span class="kt">int</span><span class="x"> </span><span class="p">{</span><span class="x">
-    </span><span class="n">length</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="x">
-    </span><span class="n">res</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="p">[][]</span><span class="kt">int</span><span class="p">{}</span><span class="x">
-    </span><span class="k">if</span><span class="x"> </span><span class="n">length</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="m">3</span><span class="x"> </span><span class="p">{</span><span class="x">
-        </span><span class="k">return</span><span class="x"> </span><span class="n">res</span><span class="x">
-    </span><span class="p">}</span><span class="x">
+</span><span class="k">func</span><span class="x"> </span><span class="n">threeSumClosest</span><span class="p">(</span><span class="n">nums</span><span class="x"> </span><span class="p">[]</span><span class="kt">int</span><span class="p">,</span><span class="x"> </span><span class="n">target</span><span class="x"> </span><span class="kt">int</span><span class="p">)</span><span class="x"> </span><span class="kt">int</span><span class="x"> </span><span class="p">{</span><span class="x">
+    </span><span class="n">length</span><span class="p">,</span><span class="x"> </span><span class="n">closest</span><span class="p">,</span><span class="x"> </span><span class="n">gap</span><span class="p">,</span><span class="x"> </span><span class="n">sum</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">),</span><span class="x"> </span><span class="m">0</span><span class="p">,</span><span class="x"> </span><span class="m">0</span><span class="p">,</span><span class="x"> </span><span class="m">0</span><span class="x">
     </span><span class="n">sort</span><span class="o">.</span><span class="n">Ints</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="x"> </span><span class="c">// 排序</span><span class="x">
 
-    </span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="m">0</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="n">length</span><span class="o">-</span><span class="m">2</span><span class="x"> </span><span class="o">&amp;&amp;</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="x"> </span><span class="o">&lt;=</span><span class="x"> </span><span class="m">0</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="o">++</span><span class="x"> </span><span class="p">{</span><span class="x"> </span><span class="c">// i为最小值，当i大于0时，不可能找到三数和为0的情况</span><span class="x">
-        </span><span class="k">if</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&gt;</span><span class="x"> </span><span class="m">0</span><span class="x"> </span><span class="o">&amp;&amp;</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="x"> </span><span class="o">==</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="m">1</span><span class="p">]</span><span class="x"> </span><span class="p">{</span><span class="x"> </span><span class="c">// 过滤相同值</span><span class="x">
-            </span><span class="k">continue</span><span class="x">
-        </span><span class="p">}</span><span class="x">
-        </span><span class="k">for</span><span class="x"> </span><span class="n">left</span><span class="p">,</span><span class="x"> </span><span class="n">right</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">i</span><span class="o">+</span><span class="m">1</span><span class="p">,</span><span class="x"> </span><span class="n">length</span><span class="o">-</span><span class="m">1</span><span class="p">;</span><span class="x"> </span><span class="n">left</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="n">right</span><span class="p">;</span><span class="x"> </span><span class="p">{</span><span class="x">
-            </span><span class="n">sum</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="x"> </span><span class="o">+</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">]</span><span class="x"> </span><span class="o">+</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">right</span><span class="p">]</span><span class="x">
-            </span><span class="k">if</span><span class="x"> </span><span class="n">sum</span><span class="x"> </span><span class="o">&gt;</span><span class="x"> </span><span class="m">0</span><span class="x"> </span><span class="p">{</span><span class="x">
+    </span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="m">0</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="n">length</span><span class="o">-</span><span class="m">2</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="o">++</span><span class="x"> </span><span class="p">{</span><span class="x"> </span><span class="c">// fix一个值</span><span class="x">
+        </span><span class="k">for</span><span class="x"> </span><span class="n">left</span><span class="p">,</span><span class="x"> </span><span class="n">right</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">i</span><span class="o">+</span><span class="m">1</span><span class="p">,</span><span class="x"> </span><span class="n">length</span><span class="o">-</span><span class="m">1</span><span class="p">;</span><span class="x"> </span><span class="n">left</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="n">right</span><span class="p">;</span><span class="x"> </span><span class="p">{</span><span class="x"> </span><span class="c">// 双指针从两边向中间移动</span><span class="x">
+            </span><span class="n">sum</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">]</span><span class="x"> </span><span class="o">+</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">right</span><span class="p">]</span><span class="x"> </span><span class="o">+</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="x">
+            </span><span class="n">diff</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">sum</span><span class="x"> </span><span class="o">-</span><span class="x"> </span><span class="n">target</span><span class="x"> </span><span class="c">// 计算差值diff</span><span class="x">
+            </span><span class="k">if</span><span class="x"> </span><span class="n">diff</span><span class="x"> </span><span class="o">&gt;</span><span class="x"> </span><span class="m">0</span><span class="x"> </span><span class="p">{</span><span class="x">
                 </span><span class="n">right</span><span class="o">--</span><span class="x">
-                </span><span class="k">for</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">right</span><span class="p">]</span><span class="x"> </span><span class="o">==</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">right</span><span class="o">+</span><span class="m">1</span><span class="p">]</span><span class="x"> </span><span class="o">&amp;&amp;</span><span class="x"> </span><span class="n">right</span><span class="x"> </span><span class="o">&gt;</span><span class="x"> </span><span class="n">left</span><span class="x"> </span><span class="p">{</span><span class="x"> </span><span class="c">// 过滤相同值</span><span class="x">
-                    </span><span class="n">right</span><span class="o">--</span><span class="x">
-                </span><span class="p">}</span><span class="x">
-            </span><span class="p">}</span><span class="x"> </span><span class="k">else</span><span class="x"> </span><span class="k">if</span><span class="x"> </span><span class="n">sum</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="m">0</span><span class="x"> </span><span class="p">{</span><span class="x">
+            </span><span class="p">}</span><span class="x"> </span><span class="k">else</span><span class="x"> </span><span class="k">if</span><span class="x"> </span><span class="n">diff</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="m">0</span><span class="x"> </span><span class="p">{</span><span class="x">
                 </span><span class="n">left</span><span class="o">++</span><span class="x">
-                </span><span class="k">for</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">]</span><span class="x"> </span><span class="o">==</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="o">-</span><span class="m">1</span><span class="p">]</span><span class="x"> </span><span class="o">&amp;&amp;</span><span class="x"> </span><span class="n">right</span><span class="x"> </span><span class="o">&gt;</span><span class="x"> </span><span class="n">left</span><span class="x"> </span><span class="p">{</span><span class="x"> </span><span class="c">// 过滤相同值</span><span class="x">
-                    </span><span class="n">left</span><span class="o">++</span><span class="x">
-                </span><span class="p">}</span><span class="x">
+                </span><span class="n">diff</span><span class="x"> </span><span class="o">*=</span><span class="x"> </span><span class="o">-</span><span class="m">1</span><span class="x">
             </span><span class="p">}</span><span class="x"> </span><span class="k">else</span><span class="x"> </span><span class="p">{</span><span class="x">
-                </span><span class="n">res</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">append</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="x"> </span><span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">],</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">right</span><span class="p">]})</span><span class="x">
-                </span><span class="n">left</span><span class="o">++</span><span class="x">
-                </span><span class="n">right</span><span class="o">--</span><span class="x">
-                </span><span class="k">for</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">]</span><span class="x"> </span><span class="o">==</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="o">-</span><span class="m">1</span><span class="p">]</span><span class="x"> </span><span class="o">&amp;&amp;</span><span class="x"> </span><span class="n">left</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="n">right</span><span class="x"> </span><span class="p">{</span><span class="x"> </span><span class="c">// 过滤</span><span class="x">
-                    </span><span class="n">left</span><span class="o">++</span><span class="x">
-                </span><span class="p">}</span><span class="x">
-                </span><span class="k">for</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">right</span><span class="p">]</span><span class="x"> </span><span class="o">==</span><span class="x"> </span><span class="n">nums</span><span class="p">[</span><span class="n">right</span><span class="o">+</span><span class="m">1</span><span class="p">]</span><span class="x"> </span><span class="o">&amp;&amp;</span><span class="x"> </span><span class="n">left</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="n">right</span><span class="x"> </span><span class="p">{</span><span class="x"> </span><span class="c">// 过滤</span><span class="x">
-                    </span><span class="n">right</span><span class="o">--</span><span class="x">
-                </span><span class="p">}</span><span class="x">
+                </span><span class="k">return</span><span class="x"> </span><span class="n">sum</span><span class="x">
+            </span><span class="p">}</span><span class="x">
+            </span><span class="k">if</span><span class="x"> </span><span class="n">diff</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="n">gap</span><span class="x"> </span><span class="o">||</span><span class="x"> </span><span class="m">0</span><span class="x"> </span><span class="o">==</span><span class="x"> </span><span class="n">gap</span><span class="x"> </span><span class="p">{</span><span class="x">
+                </span><span class="n">gap</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">diff</span><span class="x">
+                </span><span class="n">closest</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">sum</span><span class="x">
             </span><span class="p">}</span><span class="x">
         </span><span class="p">}</span><span class="x">
     </span><span class="p">}</span><span class="x">
-    </span><span class="k">return</span><span class="x"> </span><span class="n">res</span><span class="x">
+
+    </span><span class="k">return</span><span class="x"> </span><span class="n">closest</span><span class="x">
 </span><span class="p">}</span><span class="x">
 </span></code></pre></div></div>
 </div>
@@ -519,7 +506,7 @@ l-23 -6 32 -70 c37 -81 127 -184 183 -210 21 -10 44 -24 51 -32 18 -18 35 -16
         <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
       </a>
     </p>
-  </div></div></footer><div class="article__section-navigator clearfix"><div class="previous"><span>上篇</span><a href="/2018/10/31/leetcode-16-3Sum-closest.html">最接近的三数之和-leetcode</a></div><div class="next"><span>下篇</span><a href="/2018/10/30/leetcode-01-two-sum.html">两数之和-leetcode</a></div></div></div>
+  </div></div></footer><div class="article__section-navigator clearfix"><div class="previous"><span>上篇</span><a href="/2018/10/31/leetcode-18-4Sum.html">四数之和-leetcode</a></div><div class="next"><span>下篇</span><a href="/2018/10/31/leetcode-15-3Sum.html">三数之和-leetcode</a></div></div></div>
 
 <script>(function() {
   var SOURCES = window.TEXT_VARIABLES.sources;
