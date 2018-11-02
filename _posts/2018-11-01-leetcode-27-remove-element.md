@@ -1,7 +1,7 @@
 ---
 layout: article
 title: 移除元素-leetcode
-tags: leetcode array 快慢指针
+tags: leetcode linked-list 快慢指针
 key: leetcode-27-remove-element
 mathajx: false
 ---
