@@ -1,25 +1,32 @@
 ---
 layout: article
-title: 二叉树的中序遍历-leetcode
+title: 二叉树的前序遍历-leetcode
 tags: leetcode binary-tree stack 递归
-key: leetcode-94-binary-tree-inorder-traversal
+key: leetcode-144-binary-tree-preorder-traversal
 mathajx: false
 ---
 
 <!--more-->
 
-[题目链接](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/description/)
+[题目链接](https://leetcode-cn.com/problems/binary-tree-preorder-traversal/description/)
 
 ```go
 /**
-  思路：递归遍历
+  思路：递归
 */
-func inorderTraversal(root *TreeNode) []int {
+type TreeNode struct {
+    Val   int
+    Left  *TreeNode
+    Right *TreeNode
+}
+
+func preorderTraversal(root *TreeNode) []int {
     res := []int{}
     if nil != root {
-        leftRes := inorderTraversal(root.Left)
-        rightRes := inorderTraversal(root.Right)
-        res = append(leftRes, root.Val)
+        res = append(res, root.Val)
+        leftRes := preorderTraversal(root.Left)
+        res = append(res, leftRes...)
+        rightRes := preorderTraversal(root.Right)
         res = append(res, rightRes...)
     }
     return res
@@ -28,8 +35,13 @@ func inorderTraversal(root *TreeNode) []int {
 
 ```go
 /**
-  思路：非递归遍历，利用栈来实现
+  思路：非递归，利用栈实现
 */
+type TreeNode struct {
+    Val   int
+    Left  *TreeNode
+    Right *TreeNode
+}
 
 type stack struct {
     BinTree []*TreeNode
@@ -53,17 +65,16 @@ func pop(nodeStack *stack) *TreeNode {
     return res
 }
 
-func inorderTraversal(root *TreeNode) []int {
+func preorderTraversal(root *TreeNode) []int {
     res := []int{}
     myStack := &stack{[]*TreeNode{}, 0}
-    for nil != root || myStack.Top != 0 {
+    for nil != root || 0 != myStack.Top {
         for nil != root {
-            push(myStack, root)
+            res = append(res, root.Val)
+            push(myStack, root.Right)
             root = root.Left
         }
         root = pop(myStack)
-        res = append(res, root.Val)
-        root = root.Right
     }
     return res
 }

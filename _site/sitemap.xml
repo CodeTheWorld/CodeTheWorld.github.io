@@ -65,6 +65,14 @@
 <lastmod>2018-11-02T00:00:00+08:00</lastmod>
 </url>
 <url>
+<loc>http://localhost:4000/2018/11/03/leetcode-144-binary-tree-preorder-traversal.html</loc>
+<lastmod>2018-11-03T00:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/2018/11/04/leetcode-145-binary-tree-postorder-traversal.html</loc>
+<lastmod>2018-11-04T00:00:00+08:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/about.html</loc>
 </url>
 <url>
@@ -75,5 +83,8 @@
 </url>
 <url>
 <loc>http://localhost:4000/page2/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page3/</loc>
 </url>
 </urlset>
