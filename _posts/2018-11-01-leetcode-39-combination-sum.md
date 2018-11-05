@@ -1,7 +1,7 @@
 ---
 layout: article
 title: 组合总数-leetcode
-tags: leetcode array 回溯算法 递归
+tags: leetcode array 回溯算法 recursion
 key: leetcode-39-combination-sum
 mathajx: false
 ---

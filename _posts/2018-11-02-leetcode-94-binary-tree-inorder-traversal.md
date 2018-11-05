@@ -1,7 +1,7 @@
 ---
 layout: article
 title: 二叉树的中序遍历-leetcode
-tags: leetcode binary-tree stack 递归
+tags: leetcode binary-tree stack recursion
 key: leetcode-94-binary-tree-inorder-traversal
 mathajx: false
 ---

@@ -1,7 +1,7 @@
 ---
 layout: article
 title: 二叉树的后序遍历-leetcode
-tags: leetcode binary-tree stack 递归
+tags: leetcode binary-tree stack recursion
 key: leetcode-145-binary-tree-postorder-traversal
 mathajx: false
 ---

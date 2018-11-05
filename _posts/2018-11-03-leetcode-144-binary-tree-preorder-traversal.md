@@ -1,7 +1,7 @@
 ---
 layout: article
 title: 二叉树的前序遍历-leetcode
-tags: leetcode binary-tree stack 递归
+tags: leetcode binary-tree stack recursion
 key: leetcode-144-binary-tree-preorder-traversal
 mathajx: false
 ---

@@ -1,10 +1,10 @@
 <!DOCTYPE html><html lang="zh-Hans">
   <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>二叉树的中序遍历-leetcode - CodeTheWorld</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>二叉树的层次遍历-leetcode - CodeTheWorld</title>
 
 <meta name="description" content="">
-<link rel="canonical" href="http://localhost:4000/2018/11/02/leetcode-94-binary-tree-inorder-traversal.html"><link rel="alternate" type="application/rss+xml" title="CodeTheWorld" href="/feed.xml">
+<link rel="canonical" href="http://localhost:4000/2018/11/05/leetcode-102-binary-tree-level-order-traversal.html"><link rel="alternate" type="application/rss+xml" title="CodeTheWorld" href="/feed.xml">
 <!-- begin favicon -->
 <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
@@ -438,10 +438,10 @@ l-23 -6 32 -70 c37 -81 127 -184 183 -210 21 -10 44 -24 51 -32 18 -18 35 -16
 </header>
 </div><div class="page__content"><div class ="main"><div class="col-aside js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div></aside></div>
 
-          <div class="col-main"><article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1 itemprop="headline">二叉树的中序遍历-leetcode</h1></header><span class="split-space">&nbsp;</span>
+          <div class="col-main"><article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1 itemprop="headline">二叉树的层次遍历-leetcode</h1></header><span class="split-space">&nbsp;</span>
                       <a class="edit-on-github"
                         title="在 Github 上修改"
-                        href="https://github.com/CodeTheWorld/CodeTheWorld.github.io/tree/master/_posts/2018-11-02-leetcode-94-binary-tree-inorder-traversal.md">
+                        href="https://github.com/CodeTheWorld/CodeTheWorld.github.io/tree/master/_posts/2018-11-05-leetcode-102-binary-tree-level-order-traversal.md">
                         <i class="far fa-edit"></i></a></div><div class="article__info clearfix"><meta itemprop="author" content="diligent_sloth"/><ul class="left-col menu"><li>
           <a class="button button--secondary button--pill button--sm"
             href="/archive.html?tag=leetcode">leetcode</a>
@@ -450,88 +450,96 @@ l-23 -6 32 -70 c37 -81 127 -184 183 -210 21 -10 44 -24 51 -32 18 -18 35 -16
             href="/archive.html?tag=binary-tree">binary-tree</a>
         </li><li>
           <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=stack">stack</a>
+            href="/archive.html?tag=queue">queue</a>
         </li><li>
           <a class="button button--secondary button--pill button--sm"
             href="/archive.html?tag=recursion">recursion</a>
-        </li><meta itemprop="keywords" content="leetcode,binary-tree,stack,recursion">
-    </ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <time datetime="2018-11-02T00:00:00+08:00"
-              itemprop="datePublished">2018年 11月02日
+        </li><meta itemprop="keywords" content="leetcode,binary-tree,queue,recursion">
+    </ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <time datetime="2018-11-05T00:00:00+08:00"
+              itemprop="datePublished">2018年 11月05日
             </time></li><li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
             <link itemprop="interactionType" href="http://schema.org/WatchAction"/>
-            <i class="far fa-eye"></i> <span class="js-pageview" data-page-key="leetcode-94-binary-tree-inorder-traversal">0</span> 阅读
+            <i class="far fa-eye"></i> <span class="js-pageview" data-page-key="leetcode-102-binary-tree-level-order-traversal">0</span> 阅读
           </li></ul></div>
 <div class="js-article-content"><div class="layout--article">
 
   <div class="article__content" itemprop="articleBody"><!--more-->
 
-<p><a href="https://leetcode-cn.com/problems/binary-tree-inorder-traversal/description/">题目链接</a></p>
+<p><a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal/description/">题目链接</a></p>
 
 <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">/**
-  思路：递归遍历
+  思路：利用队列，将每层的节点塞入队列，当出队时，再分别将其左右子节点入队，由此实现层次遍历
+  时间复杂度：O(n)
+  空间复杂度：O(n)
 */</span><span class="x">
-</span><span class="k">func</span><span class="x"> </span><span class="n">inorderTraversal</span><span class="p">(</span><span class="n">root</span><span class="x"> </span><span class="o">*</span><span class="n">TreeNode</span><span class="p">)</span><span class="x"> </span><span class="p">[]</span><span class="kt">int</span><span class="x"> </span><span class="p">{</span><span class="x">
-    </span><span class="n">res</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="p">[]</span><span class="kt">int</span><span class="p">{}</span><span class="x">
-    </span><span class="k">if</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="n">root</span><span class="x"> </span><span class="p">{</span><span class="x">
-        </span><span class="n">leftRes</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">inorderTraversal</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">Left</span><span class="p">)</span><span class="x">
-        </span><span class="n">rightRes</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">inorderTraversal</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">Right</span><span class="p">)</span><span class="x">
-        </span><span class="n">res</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">append</span><span class="p">(</span><span class="n">leftRes</span><span class="p">,</span><span class="x"> </span><span class="n">root</span><span class="o">.</span><span class="n">Val</span><span class="p">)</span><span class="x">
-        </span><span class="n">res</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">append</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="x"> </span><span class="n">rightRes</span><span class="o">...</span><span class="p">)</span><span class="x">
+</span><span class="k">type</span><span class="x"> </span><span class="n">TreeNode</span><span class="x"> </span><span class="k">struct</span><span class="x"> </span><span class="p">{</span><span class="x">
+    </span><span class="n">Val</span><span class="x">   </span><span class="kt">int</span><span class="x">
+    </span><span class="n">Left</span><span class="x">  </span><span class="o">*</span><span class="n">TreeNode</span><span class="x">
+    </span><span class="n">Right</span><span class="x"> </span><span class="o">*</span><span class="n">TreeNode</span><span class="x">
+</span><span class="p">}</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">levelOrder</span><span class="p">(</span><span class="n">root</span><span class="x"> </span><span class="o">*</span><span class="n">TreeNode</span><span class="p">)</span><span class="x"> </span><span class="p">[][]</span><span class="kt">int</span><span class="x"> </span><span class="p">{</span><span class="x">
+    </span><span class="n">res</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="p">[][]</span><span class="kt">int</span><span class="p">{}</span><span class="x">
+    </span><span class="k">if</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="o">==</span><span class="x"> </span><span class="n">root</span><span class="x"> </span><span class="p">{</span><span class="x">
+        </span><span class="k">return</span><span class="x"> </span><span class="n">res</span><span class="x">
+    </span><span class="p">}</span><span class="x">
+    </span><span class="n">nodeList</span><span class="p">,</span><span class="x"> </span><span class="n">length</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="p">[]</span><span class="o">*</span><span class="n">TreeNode</span><span class="p">{</span><span class="n">root</span><span class="p">},</span><span class="x"> </span><span class="m">1</span><span class="x"> </span><span class="c">// 初始化队列&amp;队列长度</span><span class="x">
+    </span><span class="k">for</span><span class="x"> </span><span class="m">0</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="n">length</span><span class="x"> </span><span class="p">{</span><span class="x">                         </span><span class="c">// 每个循环代表一层</span><span class="x">
+        </span><span class="n">level</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="p">[]</span><span class="kt">int</span><span class="p">{}</span><span class="x">              </span><span class="c">// 每层的结果slice</span><span class="x">
+        </span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="m">0</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="n">length</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="o">++</span><span class="x"> </span><span class="p">{</span><span class="x"> </span><span class="c">// 遍历该层已入队的每个节点</span><span class="x">
+            </span><span class="n">level</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">append</span><span class="p">(</span><span class="n">level</span><span class="p">,</span><span class="x"> </span><span class="n">nodeList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">Val</span><span class="p">)</span><span class="x"> </span><span class="c">// 将出队的节点加入到该层的slice中</span><span class="x">
+            </span><span class="k">if</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="n">nodeList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">Left</span><span class="x"> </span><span class="p">{</span><span class="x">
+                </span><span class="n">nodeList</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">append</span><span class="p">(</span><span class="n">nodeList</span><span class="p">,</span><span class="x"> </span><span class="n">nodeList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">Left</span><span class="p">)</span><span class="x"> </span><span class="c">// 将左节点加入队列</span><span class="x">
+            </span><span class="p">}</span><span class="x">
+            </span><span class="k">if</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="n">nodeList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">Right</span><span class="x"> </span><span class="p">{</span><span class="x">
+                </span><span class="n">nodeList</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">append</span><span class="p">(</span><span class="n">nodeList</span><span class="p">,</span><span class="x"> </span><span class="n">nodeList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">Right</span><span class="p">)</span><span class="x"> </span><span class="c">// 将右节点加入队列</span><span class="x">
+            </span><span class="p">}</span><span class="x">
+        </span><span class="p">}</span><span class="x">
+        </span><span class="n">nodeList</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">nodeList</span><span class="p">[</span><span class="n">length</span><span class="o">:</span><span class="p">]</span><span class="x"> </span><span class="c">// 将遍历过的节点从队列中移除</span><span class="x">
+        </span><span class="n">length</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">len</span><span class="p">(</span><span class="n">nodeList</span><span class="p">)</span><span class="x">
+        </span><span class="n">res</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">append</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="x"> </span><span class="n">level</span><span class="p">)</span><span class="x"> </span><span class="c">// 将该层的结果加入到res中</span><span class="x">
     </span><span class="p">}</span><span class="x">
     </span><span class="k">return</span><span class="x"> </span><span class="n">res</span><span class="x">
 </span><span class="p">}</span><span class="x">
 </span></code></pre></div></div>
 
 <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">/**
-  思路：非递归遍历，利用栈来实现
+  思路：递归
+  时间复杂度：O(n)
+  空间复杂度：O(1)
 */</span><span class="x">
-
-</span><span class="k">type</span><span class="x"> </span><span class="n">stack</span><span class="x"> </span><span class="k">struct</span><span class="x"> </span><span class="p">{</span><span class="x">
-    </span><span class="n">BinTree</span><span class="x"> </span><span class="p">[]</span><span class="o">*</span><span class="n">TreeNode</span><span class="x">
-    </span><span class="n">Top</span><span class="x">     </span><span class="kt">int</span><span class="x">
+</span><span class="k">type</span><span class="x"> </span><span class="n">TreeNode</span><span class="x"> </span><span class="k">struct</span><span class="x"> </span><span class="p">{</span><span class="x">
+    </span><span class="n">Val</span><span class="x">   </span><span class="kt">int</span><span class="x">
+    </span><span class="n">Left</span><span class="x">  </span><span class="o">*</span><span class="n">TreeNode</span><span class="x">
+    </span><span class="n">Right</span><span class="x"> </span><span class="o">*</span><span class="n">TreeNode</span><span class="x">
 </span><span class="p">}</span><span class="x">
 
-</span><span class="k">func</span><span class="x"> </span><span class="n">push</span><span class="p">(</span><span class="n">nodeStack</span><span class="x"> </span><span class="o">*</span><span class="n">stack</span><span class="p">,</span><span class="x"> </span><span class="n">node</span><span class="x"> </span><span class="o">*</span><span class="n">TreeNode</span><span class="p">)</span><span class="x"> </span><span class="p">{</span><span class="x">
-    </span><span class="n">nodeStack</span><span class="o">.</span><span class="n">BinTree</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">append</span><span class="p">(</span><span class="n">nodeStack</span><span class="o">.</span><span class="n">BinTree</span><span class="p">,</span><span class="x"> </span><span class="n">node</span><span class="p">)</span><span class="x">
-    </span><span class="n">nodeStack</span><span class="o">.</span><span class="n">Top</span><span class="o">++</span><span class="x">
+</span><span class="k">func</span><span class="x"> </span><span class="n">levelOrder</span><span class="p">(</span><span class="n">root</span><span class="x"> </span><span class="o">*</span><span class="n">TreeNode</span><span class="p">)</span><span class="x"> </span><span class="p">[][]</span><span class="kt">int</span><span class="x"> </span><span class="p">{</span><span class="x">
+    </span><span class="n">result</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="p">[][]</span><span class="kt">int</span><span class="p">{}</span><span class="x">
+    </span><span class="k">return</span><span class="x"> </span><span class="n">levelOrderRecursion</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="x"> </span><span class="n">root</span><span class="p">,</span><span class="x"> </span><span class="n">result</span><span class="p">)</span><span class="x">
 </span><span class="p">}</span><span class="x">
 
-</span><span class="k">func</span><span class="x"> </span><span class="n">pop</span><span class="p">(</span><span class="n">nodeStack</span><span class="x"> </span><span class="o">*</span><span class="n">stack</span><span class="p">)</span><span class="x"> </span><span class="o">*</span><span class="n">TreeNode</span><span class="x"> </span><span class="p">{</span><span class="x">
-    </span><span class="k">var</span><span class="x"> </span><span class="n">res</span><span class="x"> </span><span class="o">*</span><span class="n">TreeNode</span><span class="x">
-    </span><span class="n">nodeStack</span><span class="o">.</span><span class="n">Top</span><span class="o">--</span><span class="x">
-    </span><span class="k">if</span><span class="x"> </span><span class="n">nodeStack</span><span class="o">.</span><span class="n">Top</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="m">0</span><span class="x"> </span><span class="p">{</span><span class="x">
-        </span><span class="n">res</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="no">nil</span><span class="x">
-    </span><span class="p">}</span><span class="x"> </span><span class="k">else</span><span class="x"> </span><span class="p">{</span><span class="x">
-        </span><span class="n">res</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">nodeStack</span><span class="o">.</span><span class="n">BinTree</span><span class="p">[</span><span class="n">nodeStack</span><span class="o">.</span><span class="n">Top</span><span class="p">]</span><span class="x">
+</span><span class="k">func</span><span class="x"> </span><span class="n">levelOrderRecursion</span><span class="p">(</span><span class="n">depth</span><span class="x"> </span><span class="kt">int</span><span class="p">,</span><span class="x"> </span><span class="n">root</span><span class="x"> </span><span class="o">*</span><span class="n">TreeNode</span><span class="p">,</span><span class="x"> </span><span class="n">result</span><span class="x"> </span><span class="p">[][]</span><span class="kt">int</span><span class="p">)</span><span class="x"> </span><span class="p">[][]</span><span class="kt">int</span><span class="x"> </span><span class="p">{</span><span class="x">
+    </span><span class="k">if</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="o">==</span><span class="x"> </span><span class="n">root</span><span class="x"> </span><span class="p">{</span><span class="x">
+        </span><span class="k">return</span><span class="x"> </span><span class="n">result</span><span class="x">
     </span><span class="p">}</span><span class="x">
-    </span><span class="n">nodeStack</span><span class="o">.</span><span class="n">BinTree</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">nodeStack</span><span class="o">.</span><span class="n">BinTree</span><span class="p">[</span><span class="o">:</span><span class="n">nodeStack</span><span class="o">.</span><span class="n">Top</span><span class="p">]</span><span class="x">
-    </span><span class="k">return</span><span class="x"> </span><span class="n">res</span><span class="x">
-</span><span class="p">}</span><span class="x">
-
-</span><span class="k">func</span><span class="x"> </span><span class="n">inorderTraversal</span><span class="p">(</span><span class="n">root</span><span class="x"> </span><span class="o">*</span><span class="n">TreeNode</span><span class="p">)</span><span class="x"> </span><span class="p">[]</span><span class="kt">int</span><span class="x"> </span><span class="p">{</span><span class="x">
-    </span><span class="n">res</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="p">[]</span><span class="kt">int</span><span class="p">{}</span><span class="x">
-    </span><span class="n">myStack</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="o">&amp;</span><span class="n">stack</span><span class="p">{[]</span><span class="o">*</span><span class="n">TreeNode</span><span class="p">{},</span><span class="x"> </span><span class="m">0</span><span class="p">}</span><span class="x">
-    </span><span class="k">for</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="n">root</span><span class="x"> </span><span class="o">||</span><span class="x"> </span><span class="n">myStack</span><span class="o">.</span><span class="n">Top</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="m">0</span><span class="x"> </span><span class="p">{</span><span class="x">
-        </span><span class="k">for</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="n">root</span><span class="x"> </span><span class="p">{</span><span class="x">
-            </span><span class="n">push</span><span class="p">(</span><span class="n">myStack</span><span class="p">,</span><span class="x"> </span><span class="n">root</span><span class="p">)</span><span class="x">
-            </span><span class="n">root</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">root</span><span class="o">.</span><span class="n">Left</span><span class="x">
-        </span><span class="p">}</span><span class="x">
-        </span><span class="n">root</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">pop</span><span class="p">(</span><span class="n">myStack</span><span class="p">)</span><span class="x">
-        </span><span class="n">res</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">append</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="x"> </span><span class="n">root</span><span class="o">.</span><span class="n">Val</span><span class="p">)</span><span class="x">
-        </span><span class="n">root</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">root</span><span class="o">.</span><span class="n">Right</span><span class="x">
+    </span><span class="k">if</span><span class="x"> </span><span class="n">depth</span><span class="o">+</span><span class="m">1</span><span class="x"> </span><span class="o">&gt;</span><span class="x"> </span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="x"> </span><span class="p">{</span><span class="x">
+        </span><span class="n">result</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">append</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="x"> </span><span class="p">[]</span><span class="kt">int</span><span class="p">{})</span><span class="x">
     </span><span class="p">}</span><span class="x">
-    </span><span class="k">return</span><span class="x"> </span><span class="n">res</span><span class="x">
+    </span><span class="n">result</span><span class="p">[</span><span class="n">depth</span><span class="p">]</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">append</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">depth</span><span class="p">],</span><span class="x"> </span><span class="n">root</span><span class="o">.</span><span class="n">Val</span><span class="p">)</span><span class="x">
+    </span><span class="n">result</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">levelOrderRecursion</span><span class="p">(</span><span class="n">depth</span><span class="o">+</span><span class="m">1</span><span class="p">,</span><span class="x"> </span><span class="n">root</span><span class="o">.</span><span class="n">Left</span><span class="p">,</span><span class="x"> </span><span class="n">result</span><span class="p">)</span><span class="x">
+    </span><span class="k">return</span><span class="x"> </span><span class="n">levelOrderRecursion</span><span class="p">(</span><span class="n">depth</span><span class="o">+</span><span class="m">1</span><span class="p">,</span><span class="x"> </span><span class="n">root</span><span class="o">.</span><span class="n">Right</span><span class="p">,</span><span class="x"> </span><span class="n">result</span><span class="p">)</span><span class="x">
 </span><span class="p">}</span><span class="x">
 </span></code></pre></div></div>
 </div>
 
-  <footer class="article__footer"><meta itemprop="dateModified" content="2018-11-02T00:00:00+08:00"><!-- this will show at every article content's bottom --><div class="article__license"><div class="license">
+  <footer class="article__footer"><meta itemprop="dateModified" content="2018-11-05T00:00:00+08:00"><!-- this will show at every article content's bottom --><div class="article__license"><div class="license">
     <p>本文遵守 <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> 许可协议。
       <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
         <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
       </a>
     </p>
-  </div></div></footer><div class="article__section-navigator clearfix"><div class="previous"><span>上篇</span><a href="/2018/11/03/leetcode-144-binary-tree-preorder-traversal.html">二叉树的前序遍历-leetcode</a></div><div class="next"><span>下篇</span><a href="/2018/11/02/leetcode-21-merge-two-sorted-lists.html">合并两个有序链表-leetcode</a></div></div></div>
+  </div></div></footer><div class="article__section-navigator clearfix"><div class="previous"><span>上篇</span><a href="/2018/11/05/leetcode-226-invert-binary-tree.html">翻转二叉树-leetcode</a></div><div class="next"><span>下篇</span><a href="/2018/11/05/leetcode-100-same-tree.html">相同的树-leetcode</a></div></div></div>
 
 <script>(function() {
   var SOURCES = window.TEXT_VARIABLES.sources;
