@@ -1,14 +1,14 @@
 ---
 layout: article
-title: 相同的树-leetcode
-tags: leetcode binary-tree
-key: leetcode-100-same-tree
+title: 对称二叉树-leetcode
+tags: leetcode binary-tree stack recursion
+key: leetcode-101-symmetric-tree
 mathajx: false
 ---
 
 <!--more-->
 
-[题目链接](https://leetcode-cn.com/problems/same-tree/description/)
+[题目链接](https://leetcode-cn.com/problems/symmetric-tree/description/)
 
 ```go
 /**
@@ -16,16 +16,29 @@ mathajx: false
   时间复杂度：O(n)
   空间复杂度：O(1)
 */
-func isSameTree(p *TreeNode, q *TreeNode) bool {
-    if nil == p && nil == q {
+type TreeNode struct {
+    Val   int
+    Left  *TreeNode
+    Right *TreeNode
+}
+
+func isSymmetric(root *TreeNode) bool {
+    if nil == root {
         return true
     }
-    if nil == p || nil == q || p.Val != q.Val {
+    return isSymmetricRecursion(root.Left, root.Right)
+}
+
+func isSymmetricRecursion(left *TreeNode, right *TreeNode) bool {
+    if nil == left && nil == right {
+        return true
+    }
+    if nil == left || nil == right || left.Val != right.Val {
         return false
     }
-    leftRes := isSameTree(p.Left, q.Left)
-    rightRes := isSameTree(p.Right, q.Right)
-    return leftRes && rightRes
+    outterRes := isSymmetricRecursion(left.Left, right.Right)
+    innerRes := isSymmetricRecursion(left.Right, right.Left)
+    return outterRes && innerRes
 }
 ```
 
@@ -35,6 +48,12 @@ func isSameTree(p *TreeNode, q *TreeNode) bool {
   时间复杂度：O(n)
   空间复杂度：O(n)
 */
+type TreeNode struct {
+    Val   int
+    Left  *TreeNode
+    Right *TreeNode
+}
+
 type stack struct {
     BinTree []*TreeNode
     Top     int
@@ -57,10 +76,14 @@ func pop(nodeStack *stack) *TreeNode {
     return res
 }
 
-func isSameTree(p *TreeNode, q *TreeNode) bool {
+func isSymmetric(root *TreeNode) bool {
+    if nil == root {
+        return true
+    }
     myStack := &stack{[]*TreeNode{}, 0}
-    push(myStack, p)
-    push(myStack, q)
+    // 左右子节点都压栈
+    push(myStack, root.Left)
+    push(myStack, root.Right)
 
     for 0 < myStack.Top {
         left := pop(myStack)
@@ -72,9 +95,9 @@ func isSameTree(p *TreeNode, q *TreeNode) bool {
             return false
         }
         push(myStack, left.Left)
-        push(myStack, right.Left)
-        push(myStack, left.Right)
         push(myStack, right.Right)
+        push(myStack, left.Right)
+        push(myStack, right.Left)
     }
     return true
 }
