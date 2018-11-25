@@ -1,11 +1,10 @@
 <!DOCTYPE html><html lang="zh-Hans">
   <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>主頁 - CodeTheWorld</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>字符串的排列-leetcode - CodeTheWorld</title>
 
-<meta name="description" content="一个程序员写东西的地方
-">
-<link rel="canonical" href="http://localhost:4000/page3/"><link rel="alternate" type="application/rss+xml" title="CodeTheWorld" href="/feed.xml">
+<meta name="description" content="">
+<link rel="canonical" href="http://localhost:4000/2018/11/25/leetcode-567-permutation-in-string.html"><link rel="alternate" type="application/rss+xml" title="CodeTheWorld" href="/feed.xml">
 <!-- begin favicon -->
 <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
@@ -249,7 +248,7 @@
 </script></head>
   <body>
     <div class="root" data-is-touch="false">
-      <div class="layout--page clearfix"><div class="page__main js-page-main"><div class="page__main-inner">
+      <div class="layout--page clearfix"><div class="page__main js-page-main has-aside"><div class="page__main-inner">
     <div></div><div class="page__header"><header class="header">
   <div class="main clearfix">
     <div class="logo"><?xml version="1.0" standalone="no"?>
@@ -437,184 +436,108 @@ l-23 -6 32 -70 c37 -81 127 -184 183 -210 21 -10 44 -24 51 -32 18 -18 35 -16
       <ul><li><a href="/archive.html">归档</a></li><li><a href="/about.html">关于</a></li></ul>
     </nav></div>
 </header>
-</div><div class="page__content"><div class ="main"><div class="col-aside js-col-aside"></div>
+</div><div class="page__content"><div class ="main"><div class="col-aside js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div></aside></div>
 
-          <div class="col-main"><article itemscope itemtype="http://schema.org/WebPage"><header style="display: none;"><h1 itemprop="headline">主頁</h1></header><div class="article__info clearfix"><meta itemprop="author" content="diligent_sloth"/></div>
-<div class="js-article-content"><div class="layout--home">
-
-  <div class="post-list"><article itemscope itemtype="http://schema.org/BlogPosting"><header class="article__header"><h2 itemprop="headline"><a href="/2018/11/15/leetcode-938-range-sum-of-bst.html">二叉搜索树的范围和-leetcode</a></h2></header>
-        <div class="article__content" itemprop="description articleBody">
-</div>
-
-        <p class="post-list__readmore"><a href="/2018/11/15/leetcode-938-range-sum-of-bst.html">阅读更多</a></p><div class="article__info clearfix"><meta itemprop="author" content="diligent_sloth"/><ul class="left-col menu"><li>
+          <div class="col-main"><article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1 itemprop="headline">字符串的排列-leetcode</h1></header><span class="split-space">&nbsp;</span>
+                      <a class="edit-on-github"
+                        title="在 Github 上修改"
+                        href="https://github.com/CodeTheWorld/CodeTheWorld.github.io/tree/master/_posts/2018-11-25-leetcode-567-permutation-in-string.md">
+                        <i class="far fa-edit"></i></a></div><div class="article__info clearfix"><meta itemprop="author" content="diligent_sloth"/><ul class="left-col menu"><li>
           <a class="button button--secondary button--pill button--sm"
             href="/archive.html?tag=leetcode">leetcode</a>
         </li><li>
           <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=binary-tree">binary-tree</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=binary-search-tree">binary-search-tree</a>
-        </li><meta itemprop="keywords" content="leetcode,binary-tree,binary-search-tree">
-    </ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span itemprop="datePublished">2018年 11月15日</span></li><li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
+            href="/archive.html?tag=%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3">滑动窗口</a>
+        </li><meta itemprop="keywords" content="leetcode,滑动窗口">
+    </ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <time datetime="2018-11-25T00:00:00+08:00"
+              itemprop="datePublished">2018年 11月25日
+            </time></li><li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
             <link itemprop="interactionType" href="http://schema.org/WatchAction"/>
-            <i class="far fa-eye"></i> <span class="js-pageview" data-page-key="leetcode-938-range-sum-of-bst">0</span> 阅读
+            <i class="far fa-eye"></i> <span class="js-pageview" data-page-key="leetcode-567-permutation-in-string">0</span> 阅读
           </li></ul></div>
-</article><article itemscope itemtype="http://schema.org/BlogPosting"><header class="article__header"><h2 itemprop="headline"><a href="/2018/11/15/leetcode-700-search-in-a-binary-search-tree.html">二叉搜索树中的搜索-leetcode</a></h2></header>
-        <div class="article__content" itemprop="description articleBody">
+<div class="js-article-content"><div class="layout--article">
+
+  <div class="article__content" itemprop="articleBody"><!--more-->
+
+<p><a href="https://leetcode-cn.com/problems/permutation-in-string/description/">题目链接</a></p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">/**
+思路：滑动窗口
+*/</span><span class="x">
+</span><span class="k">func</span><span class="x"> </span><span class="n">checkInclusion</span><span class="p">(</span><span class="n">s1</span><span class="x"> </span><span class="kt">string</span><span class="p">,</span><span class="x"> </span><span class="n">s2</span><span class="x"> </span><span class="kt">string</span><span class="p">)</span><span class="x"> </span><span class="kt">bool</span><span class="x"> </span><span class="p">{</span><span class="x">
+    </span><span class="n">length1</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span><span class="x">
+    </span><span class="n">length2</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span><span class="x">
+    </span><span class="k">if</span><span class="x"> </span><span class="n">length1</span><span class="x"> </span><span class="o">&gt;</span><span class="x"> </span><span class="n">length2</span><span class="x"> </span><span class="p">{</span><span class="x">
+        </span><span class="k">return</span><span class="x"> </span><span class="no">false</span><span class="x">
+    </span><span class="p">}</span><span class="x">
+    </span><span class="n">charArr1</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span><span class="x"> </span><span class="m">26</span><span class="p">)</span><span class="x">
+    </span><span class="n">charArr2</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span><span class="x"> </span><span class="m">26</span><span class="p">)</span><span class="x">
+    </span><span class="k">for</span><span class="x"> </span><span class="n">index</span><span class="p">,</span><span class="x"> </span><span class="n">char</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="k">range</span><span class="x"> </span><span class="n">s1</span><span class="x"> </span><span class="p">{</span><span class="x">
+        </span><span class="n">charArr1</span><span class="p">[</span><span class="n">char</span><span class="o">-</span><span class="sc">'a'</span><span class="p">]</span><span class="o">++</span><span class="x">
+        </span><span class="n">charArr2</span><span class="p">[</span><span class="n">s2</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">-</span><span class="sc">'a'</span><span class="p">]</span><span class="o">++</span><span class="x">
+    </span><span class="p">}</span><span class="x">
+    </span><span class="k">if</span><span class="x"> </span><span class="no">true</span><span class="x"> </span><span class="o">==</span><span class="x"> </span><span class="n">isEqual</span><span class="p">(</span><span class="n">charArr1</span><span class="p">,</span><span class="x"> </span><span class="n">charArr2</span><span class="p">)</span><span class="x"> </span><span class="p">{</span><span class="x">
+        </span><span class="k">return</span><span class="x"> </span><span class="no">true</span><span class="x">
+    </span><span class="p">}</span><span class="x">
+
+    </span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">length1</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="n">length2</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="o">++</span><span class="x"> </span><span class="p">{</span><span class="x">
+        </span><span class="n">charArr2</span><span class="p">[</span><span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="sc">'a'</span><span class="p">]</span><span class="o">++</span><span class="x">
+        </span><span class="n">charArr2</span><span class="p">[</span><span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="n">length1</span><span class="p">]</span><span class="o">-</span><span class="sc">'a'</span><span class="p">]</span><span class="o">--</span><span class="x">
+        </span><span class="k">if</span><span class="x"> </span><span class="no">true</span><span class="x"> </span><span class="o">==</span><span class="x"> </span><span class="n">isEqual</span><span class="p">(</span><span class="n">charArr1</span><span class="p">,</span><span class="x"> </span><span class="n">charArr2</span><span class="p">)</span><span class="x"> </span><span class="p">{</span><span class="x">
+            </span><span class="k">return</span><span class="x"> </span><span class="no">true</span><span class="x">
+        </span><span class="p">}</span><span class="x">
+    </span><span class="p">}</span><span class="x">
+    </span><span class="k">return</span><span class="x"> </span><span class="no">false</span><span class="x">
+</span><span class="p">}</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">isEqual</span><span class="p">(</span><span class="n">slice1</span><span class="x"> </span><span class="p">[]</span><span class="kt">int</span><span class="p">,</span><span class="x"> </span><span class="n">slice2</span><span class="x"> </span><span class="p">[]</span><span class="kt">int</span><span class="p">)</span><span class="x"> </span><span class="kt">bool</span><span class="x"> </span><span class="p">{</span><span class="x">
+    </span><span class="n">len1</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">len</span><span class="p">(</span><span class="n">slice1</span><span class="p">)</span><span class="x">
+    </span><span class="n">len2</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">len</span><span class="p">(</span><span class="n">slice2</span><span class="p">)</span><span class="x">
+    </span><span class="k">if</span><span class="x"> </span><span class="n">len1</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="n">len2</span><span class="x"> </span><span class="p">{</span><span class="x">
+        </span><span class="k">return</span><span class="x"> </span><span class="no">false</span><span class="x">
+    </span><span class="p">}</span><span class="x">
+    </span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="m">0</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="n">len1</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="o">++</span><span class="x"> </span><span class="p">{</span><span class="x">
+        </span><span class="k">if</span><span class="x"> </span><span class="n">slice1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="n">slice2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="x"> </span><span class="p">{</span><span class="x">
+            </span><span class="k">return</span><span class="x"> </span><span class="no">false</span><span class="x">
+        </span><span class="p">}</span><span class="x">
+    </span><span class="p">}</span><span class="x">
+    </span><span class="k">return</span><span class="x"> </span><span class="no">true</span><span class="x">
+</span><span class="p">}</span><span class="x">
+</span></code></pre></div></div>
 </div>
 
-        <p class="post-list__readmore"><a href="/2018/11/15/leetcode-700-search-in-a-binary-search-tree.html">阅读更多</a></p><div class="article__info clearfix"><meta itemprop="author" content="diligent_sloth"/><ul class="left-col menu"><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=leetcode">leetcode</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=binary-search-tree">binary-search-tree</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=binary-tree">binary-tree</a>
-        </li><meta itemprop="keywords" content="leetcode,binary-search-tree,binary-tree">
-    </ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span itemprop="datePublished">2018年 11月15日</span></li><li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
-            <link itemprop="interactionType" href="http://schema.org/WatchAction"/>
-            <i class="far fa-eye"></i> <span class="js-pageview" data-page-key="leetcode-700-search-in-a-binary-search-tree">0</span> 阅读
-          </li></ul></div>
-</article><article itemscope itemtype="http://schema.org/BlogPosting"><header class="article__header"><h2 itemprop="headline"><a href="/2018/11/14/leetcode-199-binary-tree-right-side-view.html">二叉树的右视图-leetcode</a></h2></header>
-        <div class="article__content" itemprop="description articleBody">
-</div>
+  <footer class="article__footer"><meta itemprop="dateModified" content="2018-11-25T00:00:00+08:00"><!-- this will show at every article content's bottom --><div class="article__license"><div class="license">
+    <p>本文遵守 <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> 许可协议。
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer><div class="article__section-navigator clearfix"><div class="previous"><span>上篇</span><a href="/2018/11/25/leetcode-60-permutation-sequence.html">第k个排列-leetcode</a></div><div class="next"><span>下篇</span><a href="/2018/11/25/leetcode-47-permutations-ii.html">全排列 II-leetcode</a></div></div></div>
 
-        <p class="post-list__readmore"><a href="/2018/11/14/leetcode-199-binary-tree-right-side-view.html">阅读更多</a></p><div class="article__info clearfix"><meta itemprop="author" content="diligent_sloth"/><ul class="left-col menu"><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=leetcode">leetcode</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=binary-tree">binary-tree</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=queue">queue</a>
-        </li><meta itemprop="keywords" content="leetcode,binary-tree,queue">
-    </ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span itemprop="datePublished">2018年 11月14日</span></li><li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
-            <link itemprop="interactionType" href="http://schema.org/WatchAction"/>
-            <i class="far fa-eye"></i> <span class="js-pageview" data-page-key="leetcode-199-binary-tree-right-side-view">0</span> 阅读
-          </li></ul></div>
-</article><article itemscope itemtype="http://schema.org/BlogPosting"><header class="article__header"><h2 itemprop="headline"><a href="/2018/11/14/leetcode-147-insertion-sort-list.html">对链表进行插入排序-leetcode</a></h2></header>
-        <div class="article__content" itemprop="description articleBody">
-</div>
+<script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    $(function() {
+      var $this ,$scroll;
+      var $articleContent = $('.js-article-content');
+      var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+      var scroll = hasSidebar ? '.js-page-main' : 'html, body';
+      $scroll = $(scroll);
 
-        <p class="post-list__readmore"><a href="/2018/11/14/leetcode-147-insertion-sort-list.html">阅读更多</a></p><div class="article__info clearfix"><meta itemprop="author" content="diligent_sloth"/><ul class="left-col menu"><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=leetcode">leetcode</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=linked-list">linked-list</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F">插入排序</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=%E6%8E%92%E5%BA%8F">排序</a>
-        </li><meta itemprop="keywords" content="leetcode,linked-list,插入排序,排序">
-    </ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span itemprop="datePublished">2018年 11月14日</span></li><li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
-            <link itemprop="interactionType" href="http://schema.org/WatchAction"/>
-            <i class="far fa-eye"></i> <span class="js-pageview" data-page-key="leetcode-147-insertion-sort-list">0</span> 阅读
-          </li></ul></div>
-</article><article itemscope itemtype="http://schema.org/BlogPosting"><header class="article__header"><h2 itemprop="headline"><a href="/2018/11/09/leetcode-112-path-sum.html">路径总和-leetcode</a></h2></header>
-        <div class="article__content" itemprop="description articleBody">
-</div>
-
-        <p class="post-list__readmore"><a href="/2018/11/09/leetcode-112-path-sum.html">阅读更多</a></p><div class="article__info clearfix"><meta itemprop="author" content="diligent_sloth"/><ul class="left-col menu"><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=leetcode">leetcode</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=binary-tree">binary-tree</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=recursion">recursion</a>
-        </li><meta itemprop="keywords" content="leetcode,binary-tree,recursion">
-    </ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span itemprop="datePublished">2018年 11月09日</span></li><li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
-            <link itemprop="interactionType" href="http://schema.org/WatchAction"/>
-            <i class="far fa-eye"></i> <span class="js-pageview" data-page-key="leetcode-112-path-sum">0</span> 阅读
-          </li></ul></div>
-</article><article itemscope itemtype="http://schema.org/BlogPosting"><header class="article__header"><h2 itemprop="headline"><a href="/2018/11/09/leetcode-106-construct-binary-tree-from-inorder-and-postorder-traversal.html">从中序与后序遍历序列构造二叉树-leetcode</a></h2></header>
-        <div class="article__content" itemprop="description articleBody">
-</div>
-
-        <p class="post-list__readmore"><a href="/2018/11/09/leetcode-106-construct-binary-tree-from-inorder-and-postorder-traversal.html">阅读更多</a></p><div class="article__info clearfix"><meta itemprop="author" content="diligent_sloth"/><ul class="left-col menu"><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=leetcode">leetcode</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=binary-tree">binary-tree</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=recursion">recursion</a>
-        </li><meta itemprop="keywords" content="leetcode,binary-tree,recursion">
-    </ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span itemprop="datePublished">2018年 11月09日</span></li><li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
-            <link itemprop="interactionType" href="http://schema.org/WatchAction"/>
-            <i class="far fa-eye"></i> <span class="js-pageview" data-page-key="leetcode-106-construct-binary-tree-from-inorder-and-postorder-traversal">0</span> 阅读
-          </li></ul></div>
-</article><article itemscope itemtype="http://schema.org/BlogPosting"><header class="article__header"><h2 itemprop="headline"><a href="/2018/11/09/leetcode-105-construct-binary-tree-from-preorder-and-inorder-traversal.html">从前序与中序遍历序列构造二叉树-leetcode</a></h2></header>
-        <div class="article__content" itemprop="description articleBody">
-</div>
-
-        <p class="post-list__readmore"><a href="/2018/11/09/leetcode-105-construct-binary-tree-from-preorder-and-inorder-traversal.html">阅读更多</a></p><div class="article__info clearfix"><meta itemprop="author" content="diligent_sloth"/><ul class="left-col menu"><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=leetcode">leetcode</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=binary-tree">binary-tree</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=recursion">recursion</a>
-        </li><meta itemprop="keywords" content="leetcode,binary-tree,recursion">
-    </ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span itemprop="datePublished">2018年 11月09日</span></li><li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
-            <link itemprop="interactionType" href="http://schema.org/WatchAction"/>
-            <i class="far fa-eye"></i> <span class="js-pageview" data-page-key="leetcode-105-construct-binary-tree-from-preorder-and-inorder-traversal">0</span> 阅读
-          </li></ul></div>
-</article><article itemscope itemtype="http://schema.org/BlogPosting"><header class="article__header"><h2 itemprop="headline"><a href="/2018/11/09/leetcode-103-binary-tree-zigzag-level-order-traversal.html">二叉树的锯齿形层次遍历-leetcode</a></h2></header>
-        <div class="article__content" itemprop="description articleBody">
-</div>
-
-        <p class="post-list__readmore"><a href="/2018/11/09/leetcode-103-binary-tree-zigzag-level-order-traversal.html">阅读更多</a></p><div class="article__info clearfix"><meta itemprop="author" content="diligent_sloth"/><ul class="left-col menu"><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=leetcode">leetcode</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=binary-tree">binary-tree</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=queue">queue</a>
-        </li><li>
-          <a class="button button--secondary button--pill button--sm"
-            href="/archive.html?tag=recursion">recursion</a>
-        </li><meta itemprop="keywords" content="leetcode,binary-tree,queue,recursion">
-    </ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span itemprop="datePublished">2018年 11月09日</span></li><li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
-            <link itemprop="interactionType" href="http://schema.org/WatchAction"/>
-            <i class="far fa-eye"></i> <span class="js-pageview" data-page-key="leetcode-103-binary-tree-zigzag-level-order-traversal">0</span> 阅读
-          </li></ul></div>
-</article></div><nav class="pagination"><p>共计 50 篇文章，7 页。</p>
-
-    <ul class="menu menu--nowrap"><li><a class="button button--secondary button--circle" href="/page2">
-          <i class="fas fa-angle-left"></i>
-        </a></li><li>
-            <a class="button button--secondary button--circle" href="/"><span>1</span></a>
-          </li><li>
-                <a class="button button--secondary button--circle" href="/page2"><span>2</span></a>
-              </li><li>
-            <div class="button button--primary button--circle focus"><span>3</span></div>
-          </li><li>
-                <a class="button button--secondary button--circle" href="/page4"><span>4</span></a>
-              </li><li><span class="omit"><i class="fas fa-ellipsis-h"></i></span></li><li>
-                <a class="button button--secondary button--circle" href="/page7"><span>7</span></a>
-              </li><li><a class="button button--secondary button--circle" href="/page4">
-          <i class="fas fa-angle-right"></i>
-        </a></li></ul>
-  </nav></div>
-
-<script>/*(function () {
-
-})();*/</script>
-
+      $articleContent.find('.highlight').each(function() {
+        $this = $(this);
+        $this.attr('data-lang', $this.find('code').attr('data-lang'));
+      });
+      $articleContent.find('h1, h2, h3, h4, h5, h6').each(function() {
+        $this = $(this);
+        $this.append($('<a class="anchor" aria-hidden="true"></a>').html('<i class="fas fa-anchor"></i>'));
+      });
+      $articleContent.on('click', '.anchor', function() {
+        $scroll.scrollToAnchor('#' + $(this).parent().attr('id'), 400);
+      });
+    });
+  });
+})();</script>
 </div></article>
           </div></div></div>
 
@@ -883,7 +806,65 @@ l-23 -6 32 -70 c37 -81 127 -184 183 -210 21 -10 44 -24 51 -32 18 -18 35 -16
   });
 })();/*(function () {
 
-})();*/</script>
+})();*/</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+  });
+})();</script>
     </div>
     <script>(function () {
   var $root = document.getElementsByClassName('root')[0];

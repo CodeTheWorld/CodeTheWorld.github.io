@@ -15,25 +15,27 @@ mathajx: false
 思路：递归
 */
 func permute(nums []int) [][]int {
+    return permuteStart(nums, 0)
+}
+
+func permuteStart(nums []int, index int) [][]int {
     length := len(nums)
     res := [][]int{}
-    if 0 == length {
+    if index == length {
         return res
     }
-
-    for index, value := range nums {
-        nextNums := []int{}
-        nextNums = append(nextNums, nums[:index]...)
-        nextNums = append(nextNums, nums[index+1:]...)
-        items := permute(nextNums)
-        itemLength := len(items)
-        if 0 == itemLength {
-            res = append(res, []int{value})
+    for i := index; i < length; i++ {
+        nums[i], nums[index] = nums[index], nums[i]
+        nextRes := permuteStart(nums, index+1)
+        nextLength := len(nextRes)
+        if 0 == nextLength {
+            res = append(res, []int{nums[index]})
         } else {
-            for _, item := range items {
-                res = append(res, append(item, value))
+            for _, items := range nextRes {
+                res = append(res, append(items, nums[index]))
             }
         }
+        nums[i], nums[index] = nums[index], nums[i]
     }
     return res
 }
