@@ -3,7 +3,7 @@ layout: article
 title: 二叉树的锯齿形层次遍历-leetcode
 tags: leetcode binary-tree queue recursion
 key: leetcode-103-binary-tree-zigzag-level-order-traversal
-mathajx: false
+mathajx:  false
 ---
 
 <!--more-->
