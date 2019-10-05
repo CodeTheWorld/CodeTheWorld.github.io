@@ -10,6 +10,10 @@ mathajx: false
 
 [题目链接](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/description/)
 
+**相似题目**
+
+- [二叉树的锯齿形层次遍历](https://codetheworld.github.io/2018/11/09/leetcode-103-binary-tree-zigzag-level-order-traversal.html)
+
 ```go
 /**
   思路：利用队列，将每层的节点塞入队列，当出队时，再分别将其左右子节点入队，由此实现层次遍历

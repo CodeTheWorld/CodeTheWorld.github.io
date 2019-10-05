@@ -3,12 +3,16 @@ layout: article
 title: 二叉树的锯齿形层次遍历-leetcode
 tags: leetcode binary-tree queue recursion
 key: leetcode-103-binary-tree-zigzag-level-order-traversal
-mathajx:  false
+mathajx: false
 ---
 
 <!--more-->
 
 [题目链接](https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/description/)
+
+**相似题目**
+
+- [二叉树的层次遍历](https://codetheworld.github.io/2018/11/05/leetcode-102-binary-tree-level-order-traversal.html)
 
 ```go
 /**
