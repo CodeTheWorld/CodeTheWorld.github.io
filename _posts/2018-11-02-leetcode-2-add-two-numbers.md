@@ -19,7 +19,7 @@ mathajx: false
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
     sum := &ListNode{}
     bit, flag, iterator := 0, 0, sum // bit 每位和，flag 进位标志 iterator 迭代器
-    for nil != l1 || nil != l2 {
+    for nil != l1 || nil != l2 || flag != 0 {
         bit = flag
         if nil != l1 {
             bit += l1.Val
