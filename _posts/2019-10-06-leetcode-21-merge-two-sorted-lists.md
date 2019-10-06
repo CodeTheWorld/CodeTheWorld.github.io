@@ -35,16 +35,11 @@ func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
         }
         ptr = ptr.Next
     }
-
-    for nil != l1 { // l1不为空
+    if l1 != nil { // l1不为空
         ptr.Next = l1
-        l1 = l1.Next
-        ptr = ptr.Next
     }
-    for nil != l2 { // l2不为空
+    if l2 != nil { // l2不为空
         ptr.Next = l2
-        l2 = l2.Next
-        ptr = ptr.Next
     }
 
     return head.Next
